@@ -4,7 +4,7 @@ Compared with android raw http interface, Okhttp encapsulate handy API for most 
 Because of the rudness design for android raw http, You must write a lot of utility, and hard-code like code, that is ineffective for coding.
 Apache http client is widely used before, but now abandoned from android SDK, and not recommended to use. It's too heavy, moreover bugs found in it.
 
-###OkhttpClient object && timeout
+### OkhttpClient object && timeout
 
 As for Okhttp, OkhttpClient object should be shared, creating a client object for each request wastes resources. please refer to comments from OkhttpClient.java file.
 so below is the skeleton of the wrapper class of OkhttpClient which is shared and set timeout properly.
@@ -13,47 +13,47 @@ public class MyHttpClient {
     /* static shared */
     private static OkhttpClient defaultClient;
     
-	public void init(int connectTimeout, int readTimeout) {
-	    /* construct the defaultClient object with connect timeout and read timeout. */
-		defaultClient = new OkhttpClient().builder().readTimeout(readTimeout, TimeUnit.MILLISECONDS).connectTimeout(connectTimeout, TimeUnit.MILLISECONDS).build();
-	}
+    public void init(int connectTimeout, int readTimeout) {
+    /* construct the defaultClient object with connect timeout and read timeout. */
+    defaultClient = new OkhttpClient().builder().readTimeout(readTimeout, TimeUnit.MILLISECONDS).connectTimeout(connectTimeout, TimeUnit.MILLISECONDS).build();
+    }
     
     /* execute http method with default timeout arguments for most cases. */
-    public InputStream visit(String url, byte[] data, Map<String, String> headers, HttpMethod method){
-	    /* construct Request. */
-		Request request = ...
-		/* using the default http client to execute the request. 
+    public InputStream visit(String url, byte[] data, Map<String, String> headers, HttpMethod method) {
+        /* construct Request. */
+	Request request = ...
+	/* using the default http client to execute the request. 
         for instance using synchronized call: */
-		defaultClient.newCall(request).execute();
-		...	
-	}
+	defaultClient.newCall(request).execute();
+	...	
+    }
 	
-	/* 
+    /* 
     execute http method with custom timeout arguments,
     for debugging or some special cases using different timeout.
     */
-	public InputStream visit(String url, byte[] data, Map<String, String> headers, HttpMethod method, int connectTimeout, int readTimeout) {
-	    /* customClient is just a reference to defaultClient, but with different timeout attributes,
+    public InputStream visit(String url, byte[] data, Map<String, String> headers, HttpMethod method, int connectTimeout, int readTimeout) {
+    /* customClient is just a reference to defaultClient, but with different timeout attributes,
         so constructing it is fast. */
-	    OkhttpClient customClient = defaultClient.newBuilder().readTimeout(readTimeout, TimeUnit.MILLISECONDS).connectTimeout(connectTimeout, TimeUnit.MILLISECONDS).build();		 
-		/* construct Request. */
-		Request request = ...
-		/* using the custom http client to execute this request. for instance: */
-		customClient.newCall(request).execute();
-		...	
-	}	
+    OkhttpClient customClient = defaultClient.newBuilder().readTimeout(readTimeout, TimeUnit.MILLISECONDS).connectTimeout(connectTimeout, TimeUnit.MILLISECONDS).build();		 
+    /* construct Request. */
+    Request request = ...
+    /* using the custom http client to execute this request. for instance: */
+    customClient.newCall(request).execute();
+    ...	
+    }	
 	
-	/* NOT recommended. creating a new http client for each request. */
-	public InputStream badVisit(String url, byte[] data, Map<String, String> headers, HttpMethod method) {
-	    OkhttpClient newClient = new OkhttpClient().builder().build();
-		Request request = ...
-		newClient.newCall(request).execute();
-		...
-	}
+    /* NOT recommended. creating a new http client for each request. */
+    public InputStream badVisit(String url, byte[] data, Map<String, String> headers, HttpMethod method) {
+        OkhttpClient newClient = new OkhttpClient().builder().build();
+	Request request = ...
+	newClient.newCall(request).execute();
+	...
+    }
 }
 ```
 
-###Decompress Okhttp response 
+### Decompress Okhttp response 
 About the Okhttp response, should I check to decompress? there are two solutions you can do, but the first is recommended.
 
 * Do not set the header `Accept-Encoding` with value `gzip` explicitly.
