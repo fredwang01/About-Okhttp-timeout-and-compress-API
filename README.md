@@ -13,9 +13,11 @@ public class MyHttpClient {
     /* static shared */
     private static OkhttpClient defaultClient;
     
-    public void init(int connectTimeout, int readTimeout) {
+    public void synchronized init(int connectTimeout, int readTimeout) {
         /* construct the defaultClient object with connect timeout and read timeout. */
-        defaultClient = new OkhttpClient().builder().readTimeout(readTimeout, TimeUnit.MILLISECONDS).connectTimeout(connectTimeout, TimeUnit.MILLISECONDS).build();
+	if (defaultClient == null) {
+	    defaultClient = new OkhttpClient().builder().readTimeout(readTimeout, TimeUnit.MILLISECONDS).connectTimeout(connectTimeout, TimeUnit.MILLISECONDS).build();
+	}        
     }
     
     /* execute http method with default timeout arguments for most cases. */
