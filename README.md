@@ -14,8 +14,8 @@ public class MyHttpClient {
     private static OkhttpClient defaultClient;
     
     public void init(int connectTimeout, int readTimeout) {
-    /* construct the defaultClient object with connect timeout and read timeout. */
-    defaultClient = new OkhttpClient().builder().readTimeout(readTimeout, TimeUnit.MILLISECONDS).connectTimeout(connectTimeout, TimeUnit.MILLISECONDS).build();
+        /* construct the defaultClient object with connect timeout and read timeout. */
+        defaultClient = new OkhttpClient().builder().readTimeout(readTimeout, TimeUnit.MILLISECONDS).connectTimeout(connectTimeout, TimeUnit.MILLISECONDS).build();
     }
     
     /* execute http method with default timeout arguments for most cases. */
@@ -33,14 +33,14 @@ public class MyHttpClient {
     for debugging or some special cases using different timeout.
     */
     public InputStream visit(String url, byte[] data, Map<String, String> headers, HttpMethod method, int connectTimeout, int readTimeout) {
-    /* customClient is just a reference to defaultClient, but with different timeout attributes,
+        /* customClient is just a reference to defaultClient, but with different timeout attributes,
         so constructing it is fast. */
-    OkhttpClient customClient = defaultClient.newBuilder().readTimeout(readTimeout, TimeUnit.MILLISECONDS).connectTimeout(connectTimeout, TimeUnit.MILLISECONDS).build();		 
-    /* construct Request. */
-    Request request = ...
-    /* using the custom http client to execute this request. for instance: */
-    customClient.newCall(request).execute();
-    ...	
+        OkhttpClient customClient = defaultClient.newBuilder().readTimeout(readTimeout, TimeUnit.MILLISECONDS).connectTimeout(connectTimeout, TimeUnit.MILLISECONDS).build();		 
+        /* construct Request. */
+        Request request = ...
+        /* using the custom http client to execute this request. for instance: */
+        customClient.newCall(request).execute();
+        ...	
     }	
 	
     /* NOT recommended. creating a new http client for each request. */
