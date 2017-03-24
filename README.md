@@ -63,7 +63,7 @@ Okhttp interceptor will check the request headers, if not found `Accept-Encoding
 it is responsible for decompressing the response stream and remove the `Content-Encoding` and `Content-Length` headers from response.
 all these activity are not involved with caller.
 
- please refer to these details(okhttp3/internal/http/BridgeInterceptor.java):
+ Please refer to the following details(okhttp3/internal/http/BridgeInterceptor.java):
  
 ```
    public Response intercept(Chain chain) throws IOException {
