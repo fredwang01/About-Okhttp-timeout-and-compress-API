@@ -140,7 +140,7 @@ all these activity are not involved with caller.
 
 
 * You can set the header `Accept-Encoding` with value `gzip` for request explicitly. as we see above, in this situation, Okhttp will not decompress
-response stream and you must check the `Content-Encoding` yourself and decide if decompress. 
+response stream and you must check the `Content-Encoding` yourself and decide if decompress. this is helpful and only necessary for using non-gzip compress method which both client and server support.
 
 
   
