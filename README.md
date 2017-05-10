@@ -1,12 +1,12 @@
-Okhttp is a high-quality http client with easy-used API, it is already integrated in android SDK.
-Compared with android raw http interface, Okhttp encapsulate handy API for most using cases.
+Okhttp is a high-quality HTTP client with easy-used API, it is already integrated in Android SDK.
+Compared with android raw HTTP interface, Okhttp encapsulate handy API for most use cases.
 
-Because of the rudness design for android raw http, You must write a lot of utility, and hard-code like code, that is ineffective for coding.
-Apache http client is widely used before, but now abandoned from android SDK, and not recommended to use. It's too heavy, moreover bugs found in it.
+Because of the rudness design for android raw HTTP, You must write a lot of utility, and hard-code like code, which is ineffective for coding.
+Apache HTTP client is widely used before, but now abandoned from Android SDK, and not recommended to use. It's too heavy, moreover bugs found in it.
 
 ### OkhttpClient object && timeout
 
-As for Okhttp, OkhttpClient object should be shared, creating a client object for each request wastes resources. please refer to comments from OkhttpClient.java file.
+As for Okhttp, OkhttpClient object should be shared, creating a client object for each request wastes resources. Please refer to comments from OkhttpClient.java file.
 so below is the skeleton of the wrapper class of OkhttpClient which is shared and set timeout properly.
 ``` 
 public class MyHttpClient {
@@ -56,7 +56,7 @@ public class MyHttpClient {
 ```
 
 ### Decompress Okhttp response 
-About the Okhttp response, should I check to decompress? there are two solutions you can do, but the first is recommended.
+About the Okhttp response, should you check to decompress? there are two solutions you can do, but the first is recommended.
 
 * Do not set the header `Accept-Encoding` with value `gzip` explicitly.
 Okhttp interceptor will check the request headers, if not found `Accept-Encoding`, it add this header automatically, as a result, 
